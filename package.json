@@ -3,8 +3,7 @@
   "version": "0.6.0",
   "description": "",
   "scripts": {
-    "start": "http-server src -o",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "http-server src -o"
   },
   "author": "Jason Gallavin",
   "license": "ISC",
