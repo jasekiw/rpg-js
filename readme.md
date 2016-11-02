@@ -1,14 +1,14 @@
 #A Javascript RPG Game
 
 ##Controls
-w - move up
-a - move left
-s - move down
-d - move right
-j - attack in the facing direction
+w - move up<br/>
+a - move left<br/>
+s - move down<br/>
+d - move right<br/>
+j - attack in the facing direction<br/>
 
 
 
 ##Building Project
-run `npm i` to install dependencies
-run `npm start` to launch the game
+run `npm i` to install dependencies<br/>
+run `npm start` to launch the game<br/>
