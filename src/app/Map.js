@@ -17,20 +17,20 @@ function Map(width, height) {
             addElementBackground(x, y);
 
 
-    this.addPlayer = function(Player) {
+    this.addPlayer = function (Player) {
         player = Player;
     };
 
-    this.getPlayer = function() {
+    this.getPlayer = function () {
         return player
     };
 
-    this.addEnemy = function(enemy) {
+    this.addEnemy = function (enemy) {
         enemies.push(enemy);
         return enemies.length - 1;
     };
 
-    this.getEnemyIn = function(x, y) {
+    this.getEnemyIn = function (x, y) {
         for (var i = 0; i < enemies.length; i++) {
 
             if (enemies[i].getLocationX() == x && enemies[i].getLocationY() == y) {
@@ -41,21 +41,21 @@ function Map(width, height) {
         }
         return null;
     };
-    this.removeEnemy = function(id) {
+    this.removeEnemy = function (id) {
         for (var i = 0; i < enemies.length; i++) {
             if (enemies[i].getId() == id) {
                 enemies.splice(i, 1);
             }
         }
     };
-    this.getTileWidth = function() {
+    this.getTileWidth = function () {
         return tileWidth;
     };
-    this.getTileHeight = function() {
+    this.getTileHeight = function () {
         return tileHeight;
     };
 
-    this.setPlayerLocation = function(moveX, moveY) {
+    this.setPlayerLocation = function (moveX, moveY) {
         var left = initialLocationX;
         var top = initialLocationY;
 
@@ -70,7 +70,7 @@ function Map(width, height) {
             enemies[i].updatePosition();
 
     };
-    this.setPlayerTile = function(moveX, moveY) {
+    this.setPlayerTile = function (moveX, moveY) {
         var left = initialLocationX;
         var top = initialLocationY;
 
@@ -88,26 +88,26 @@ function Map(width, height) {
         }
     };
 
-    this.getPlayerLocationX = function() {
+    this.getPlayerLocationX = function () {
         var left = initialLocationX;
         var top = initialLocationY;
         var elem = document.getElementById('img' + 0 + ';' + 0);
         return Math.floor((Number(elem.style.left.substring(0, elem.style.left.indexOf('px'))) - left) / -100)
     };
-    this.getPlayerOffsetX = function() {
+    this.getPlayerOffsetX = function () {
         var left = initialLocationX;
         var top = initialLocationY;
         var elem = document.getElementById('img' + 0 + ';' + 0);
         return ((Number(elem.style.left.substring(0, elem.style.left.indexOf('px'))) - left) / -100) -
             Math.floor((Number(elem.style.left.substring(0, elem.style.left.indexOf('px'))) - left) / -100);
     };
-    this.getPlayerLocationY = function() {
+    this.getPlayerLocationY = function () {
         var left = initialLocationX;
         var top = initialLocationY;
         var elem = document.getElementById('img' + 0 + ';' + 0);
         return Math.floor((Number(elem.style.top.substring(0, elem.style.top.indexOf('px'))) - top) / -100)
     };
-    this.getPlayerOffsetY = function() {
+    this.getPlayerOffsetY = function () {
         var left = initialLocationX;
         var top = initialLocationY;
         var elem = document.getElementById('img' + 0 + ';' + 0);

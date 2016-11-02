@@ -1,21 +1,20 @@
 /**
  * Player Class
- * @param element
+ * @param elementParam
  * @param mapParam
  * @param characterSpriteSheet
  * @constructor
  */
-function Player(element, mapParam, characterSpriteSheet)
-{
-    var imglocation = Resources.getCharacter("131");
-    var element = element;
-    var level= 1;
+function Player(elementParam, mapParam, characterSpriteSheet) {
+    var imgLocation = Resources.getCharacter("131");
+    var element = elementParam;
+    var level = 1;
     var experience = 0;
     var hp = level * 100;
     var alive = true;
     var map = mapParam;
     var automationComplete = true;
-    map.setPlayerTile(0,0);
+    map.setPlayerTile(0, 0);
     var automation = new MoveAutomation(this, map);
     var time = getTime();
     var lastTime = getTime();
@@ -25,49 +24,42 @@ function Player(element, mapParam, characterSpriteSheet)
 
     element.style.left = Math.round(((window.innerWidth / 2)) - 50) + 'px';
     element.style.top = Math.round(((window.innerHeight / 2))) - 100 + 'px';
-    element.setAttribute('src',imglocation);
+    element.setAttribute('src', imgLocation);
 
-    this.getLevel = function()
-    {
+    this.getLevel = function () {
         return level;
     };
-    this.giveXp = function(xpToAdd)
-    {
+
+    this.giveXp = function (xpToAdd) {
         this.experience += xpToAdd;
-        if(this.experience > (((level + 1) * (level + 1)) * 10))
-        {
+        if (this.experience > (((level + 1) * (level + 1)) * 10)) {
             level = Math.floor(Math.sqrt(this.experience / 10));
             ChatConsole.LogThis("congratulations, you've leveled up to " + level + "!");
         }
     };
-    this.getAutomation = function()
-    {
+
+    this.getAutomation = function () {
         return automation;
-    };
-    this.getAnimation = function()
-    {
+    }
+
+    this.getAnimation = function () {
         return characterSpriteSheet;
     };
 
-    this.update = function()
-    {
-       var healthBar =  $(".progress-bar span");
+    this.update = function () {
+        var healthBar = $(".progress-bar span");
         healthBar.css("width", ((hp / (level * 100)) * 100) + "%");
-        if(!yawn)
-        {
+        if (!yawn) {
             time = getTime();
         }
-        if((time - lastTime) > Math.round(Math.random() * 10000) + 20000 )
-        {
+        if ((time - lastTime) > Math.round(Math.random() * 10000) + 20000) {
             yawn = true;
             this.resetYawnTimer();
         }
-        if(yawn)
-        {
+        if (yawn) {
             yawn = characterSpriteSheet.animateYawn();
 
-            if(!yawn)
-            {
+            if (!yawn) {
                 characterSpriteSheet.ResetSprite();
                 this.resetYawnTimer();
             }
@@ -76,152 +68,113 @@ function Player(element, mapParam, characterSpriteSheet)
 
     };
 
-    this.healFull = function()
-    {
+    this.healFull = function () {
         hp = level * 100;
     };
 
-    this.heal = function(number)
-    {
+    this.heal = function (number) {
         hp += number;
     };
-    this.getAlive = function()
-    {
+    this.getAlive = function () {
         return alive;
     };
-    this.takeDamage = function(number)
-    {
+    this.takeDamage = function (number) {
         hp -= number;
         ChatConsole.LogThis("You took " + number + " damage. Your hp is: " + hp);
-        if(hp <= 0)
-        {
+        if (hp <= 0) {
             ChatConsole.LogThis("Oh Dear, You are dead!");
             this.alive = false;
             var elem = document.getElementById("character");
             elem.parentNode.removeChild(elem);
         }
     };
-    this.attack = function()
-    {
+    this.attack = function () {
         var attackDone = !characterSpriteSheet.animateAttack();
-        if(attackDone)
-        {
-            var lastDirection = characterSpriteSheet.getLastDirection();
-
-            if(lastDirection.indexOf("up") > -1)
-            {
-
-                var enemy = map.getEnemyIn(this.getLocationX(), this.getLocationY() - 1);
-                ChatConsole.LogThis(enemy);
-
-                if ( enemy != null )
-                {
-
-                    this.attackEnemy(enemy);
-                }
-
-            }
-            else if(lastDirection.indexOf("down") > -1)
-            {
-                var enemy = map.getEnemyIn(this.getLocationX(), this.getLocationY() + 1);
-                if ( enemy != null )
-                    this.attackEnemy(enemy);
-
-            }
-            else if(lastDirection.indexOf("left") > -1)
-            {
-                var enemy = map.getEnemyIn(this.getLocationX() - 1, this.getLocationY());
-                if ( enemy != null )
-                    this.attackEnemy(enemy);
-
-            }
-            else if(lastDirection.indexOf("right") > -1)
-            {
-                var enemy = map.getEnemyIn(this.getLocationX() + 1, this.getLocationY());
-                if ( enemy != null )
-                    this.attackEnemy(enemy);
-
-            }
-
+        if (!attackDone)
+            return;
+        var lastDirection = characterSpriteSheet.getLastDirection();
+        if (lastDirection.indexOf("up") > -1) {
+            var enemy = map.getEnemyIn(this.getLocationX(), this.getLocationY() - 1);
+            if (enemy != null)
+                this.attackEnemy(enemy);
+        }
+        else if (lastDirection.indexOf("down") > -1) {
+            var enemy = map.getEnemyIn(this.getLocationX(), this.getLocationY() + 1);
+            if (enemy != null)
+                this.attackEnemy(enemy);
+        }
+        else if (lastDirection.indexOf("left") > -1) {
+            var enemy = map.getEnemyIn(this.getLocationX() - 1, this.getLocationY());
+            if (enemy != null)
+                this.attackEnemy(enemy);
+        }
+        else if (lastDirection.indexOf("right") > -1) {
+            var enemy = map.getEnemyIn(this.getLocationX() + 1, this.getLocationY());
+            if (enemy != null)
+                this.attackEnemy(enemy);
         }
     };
-    this.attackEnemy = function(Monster)
-    {
-
+    this.attackEnemy = function (Monster) {
         var damage = Math.round(Math.random() * (level * 30));
         var blockChance = Monster.getLevel() / (level * 2);
-        if(!((blockChance * 100) > (Math.random() * 100)))
+        if (!((blockChance * 100) > (Math.random() * 100)))
             Monster.takeDamage(damage);
         else
             ChatConsole.LogThis("The monster blocked your attack!");
-
-
-
     };
 
-    this.setLocationOnScreen = function(x,y)
-    {
+    this.setLocationOnScreen = function (x, y) {
         element.style.top = y + "px";
         element.style.left = x + "px";
     };
-    this.setLocation= function(x,y)
-    {
-       map.setPlayerLocation(x,y);
+    this.setLocation = function (x, y) {
+        map.setPlayerLocation(x, y);
     };
-    this.moveUp = function()
-    {
+    this.moveUp = function () {
         characterSpriteSheet.animateUp();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() , this.getLocationY() +this.getoffsetY() - .1);
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX(), this.getLocationY() + this.getOffsetY() - .1);
         this.resetYawnTimer();
         yawn = false;
         status = "moving-up";
     };
-    this.moveDown = function()
-    {
+    this.moveDown = function () {
         characterSpriteSheet.animateDown();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() , this.getLocationY() +this.getoffsetY() +.1);
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX(), this.getLocationY() + this.getOffsetY() + .1);
         this.resetYawnTimer();
         yawn = false;
         status = "moving-down";
     };
-    this.moveRight = function()
-    {
+    this.moveRight = function () {
         characterSpriteSheet.animateRight();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() +.1 , this.getLocationY() +this.getoffsetY() );
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX() + .1, this.getLocationY() + this.getOffsetY());
         this.resetYawnTimer();
         yawn = false;
         status = "moving-right";
     };
-    this.moveLeft = function()
-    {
+    this.moveLeft = function () {
 
         characterSpriteSheet.animateLeft();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() - .1 , this.getLocationY() +this.getoffsetY() );
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX() - .1, this.getLocationY() + this.getOffsetY());
         this.resetYawnTimer();
         yawn = false;
         status = "moving-left";
     };
 
-    this.getLocationX = function()
-    {
+    this.getLocationX = function () {
         return map.getPlayerLocationX();
     };
-    this.getLocationY = function()
-    {
+    this.getLocationY = function () {
         return map.getPlayerLocationY();
     };
-    this.getoffsetX = function()
-    {
+    this.getOffsetX = function () {
         return map.getPlayerOffsetX();
     };
-    this.getoffsetY = function()
-    {
+    this.getOffsetY = function () {
         return map.getPlayerOffsetY();
     };
 
 
-    this.resetYawnTimer = function()
-    {
+    this.resetYawnTimer = function () {
         time = getTime();
         lastTime = time;
     }

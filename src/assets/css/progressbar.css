@@ -3,12 +3,13 @@
 }
 
 .healthContainer {
-    text-align:right;
+    text-align: right;
     position: absolute;
     right: 25px;
 }
+
 .progress-bar {
-    text-align:left;
+    text-align: left;
     background-color: #1a1a1a;
     height: 25px;
     padding: 5px;

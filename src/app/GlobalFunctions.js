@@ -1,7 +1,4 @@
-
-
-function getTime()
-{
+function getTime() {
     var d = new Date();
     return d.getTime();
 }

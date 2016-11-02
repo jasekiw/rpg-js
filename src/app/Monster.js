@@ -5,36 +5,32 @@
  * Time: 11:39 PM
  * To change this template use File | Settings | File Templates.
  */
-function Monster(levelParam,lx,ly, mapParam)
-{
+function Monster(levelParam, lx, ly, mapParam) {
 
-    this.getXRelativeToScreen = function()
-    {
+    this.getXRelativeToScreen = function () {
         var realX = getLeftOfElement(document.getElementById("img" + locationX + ";" + locationY));
         realX = realX + offsetX;
         return realX;
     };
-    this.getYRelativeToScreen = function()
-    {
+    this.getYRelativeToScreen = function () {
         var realY = getTopOfElement(document.getElementById("img" + locationX + ";" + locationY));
         realY += offsetY;
         return realY;
     };
-    this.updatePosition = function()
-    {
-        element.style.left =  (this.getXRelativeToScreen() - 50).toString() + 'px';
-        element.style.top =   (this.getYRelativeToScreen() - 100).toString() + 'px';
+    this.updatePosition = function () {
+        element.style.left = (this.getXRelativeToScreen() - 50).toString() + 'px';
+        element.style.top = (this.getYRelativeToScreen() - 100).toString() + 'px';
     };
 
-    this.addToScreen = function() {
+    this.addToScreen = function () {
 
         var ni = document.getElementById('gameViewer');
         var newdiv = document.createElement('img');
         var divIdName = 'skeleton-' + id;
-        newdiv.setAttribute('id',divIdName);
-        newdiv.setAttribute('src',Resources.getSkeleton("01"));
-        newdiv.setAttribute('width','100px');
-        newdiv.setAttribute('height','100px');
+        newdiv.setAttribute('id', divIdName);
+        newdiv.setAttribute('src', Resources.getSkeleton("01"));
+        newdiv.setAttribute('width', '100px');
+        newdiv.setAttribute('height', '100px');
         newdiv.style.position = 'absolute';
         newdiv.style.left = "" + this.getXRelativeToScreen().toString() + 'px';
         newdiv.style.top = "" + this.getYRelativeToScreen().toString() + 'px';
@@ -61,40 +57,33 @@ function Monster(levelParam,lx,ly, mapParam)
     var skeletonSpriteSheet = new SkeletonSpriteSheet(element);
     var attacking = false;
 
-    this.getAlive = function()
-    {
+    this.getAlive = function() {
         return alive;
     };
     this.getId = function() {
         return id;
     };
 
-    this.getAutomation = function()
-    {
+    this.getAutomation = function() {
         return automation;
     };
-    this.getAnimation = function()
-    {
+    this.getAnimation = function() {
         return skeletonSpriteSheet;
     };
 
-    this.update = function()
-    {
-        if(alive)
-        {
-            if((map.getPlayerLocationX() - locationX <= 1 && map.getPlayerLocationX() - locationX >= -1) &&
+    this.update = function () {
+        if (alive) {
+            if ((map.getPlayerLocationX() - locationX <= 1 && map.getPlayerLocationX() - locationX >= -1) &&
                 (map.getPlayerLocationY() - locationY <= 1 && map.getPlayerLocationY() - locationY >= -1)) {
                 attacking = true;
             }
-            if(attacking)
+            if (attacking)
                 this.attack();
             automationComplete = automation.automate();
         }
-        else
-        {
-           var deathCompleted = !skeletonSpriteSheet.DeathSprite();
-            if(deathCompleted)
-            {
+        else {
+            var deathCompleted = !skeletonSpriteSheet.DeathSprite();
+            if (deathCompleted) {
                 map.removeEnemy(id);
                 var elem = document.getElementById("skeleton-" + id);
                 elem.parentNode.removeChild(elem);
@@ -103,109 +92,92 @@ function Monster(levelParam,lx,ly, mapParam)
         }
         return false; // return true to dispose of object
     };
-    this.getLevel = function()
-    {
+    this.getLevel = function() {
         return level;
     };
 
-    this.healFull = function()
-    {
+    this.healFull = function() {
         hp = level * 100;
     };
 
-    this.heal = function(number)
-    {
+    this.heal = function (number) {
         hp += number;
     };
-    this.takeDamage = function(number)
-    {
+    this.takeDamage = function (number) {
         hp = hp - number < 0 ? 0 : hp - number;
         ChatConsole.LogThis("You hit the monster with " + number + " damage. Monster's health: " + hp);
-        if(hp <= 0) {
+        if (hp <= 0) {
             alive = false;
             ChatConsole.LogThis("You killed the monster!");
         }
     };
 
-    this.attack = function()
-    {
+    this.attack = function () {
         var attackDone = !skeletonSpriteSheet.animateAttack();
-        if(attackDone)
-        {
-            if((map.getPlayerLocationX() - locationX <= 1 && map.getPlayerLocationX() - locationX >= -1) &&
+        if (attackDone) {
+            if ((map.getPlayerLocationX() - locationX <= 1 && map.getPlayerLocationX() - locationX >= -1) &&
                 (map.getPlayerLocationY() - locationY <= 1 && map.getPlayerLocationY() - locationY >= -1)) {
                 this.attackEnemy(map.getPlayer());
             }
-            else{
+            else {
                 attacking = false;
                 skeletonSpriteSheet.ResetSprite();
             }
         }
     };
 
-    this.attackEnemy = function(Player)
-    {
-        if(Player.getAlive())
-        {
+    this.attackEnemy = function (Player) {
+        if (Player.getAlive()) {
             var damage = Math.round(Math.random() * (level * 30));
             var blockChance = Player.getLevel() / (level * 2);
-            if(!((blockChance * 100) > (Math.random() * 100)))
+            if (!((blockChance * 100) > (Math.random() * 100)))
                 Player.takeDamage(damage);
             else
                 ChatConsole.LogThis("You blocked the attack!");
         }
     };
 
-    this.setLocationOnScreen = function(x,y)
-    {
+    this.setLocationOnScreen = function (x, y) {
         element.style.top = y + "px";
         element.style.left = x + "px";
     };
-    this.setLocation= function(x,y)
-    {
+
+    this.setLocation = function (x, y) {
         locationX = x;
         locationY = y;
     };
-    this.moveUp = function()
-    {
+    this.moveUp = function () {
         skeletonSpriteSheet.animateUp();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() , this.getLocationY() +this.getoffsetY() - .1);
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX(), this.getLocationY() + this.getOffsetY() - .1);
         status = "moving-up";
     };
-    this.moveDown = function()
-    {
+    this.moveDown = function () {
         skeletonSpriteSheet.animateDown();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() , this.getLocationY() +this.getoffsetY() +.1);
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX(), this.getLocationY() + this.getOffsetY() + .1);
         status = "moving-down";
     };
-    this.moveRight = function()
-    {
+    this.moveRight = function () {
         skeletonSpriteSheet.animateRight();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() +.1 , this.getLocationY() +this.getoffsetY() );
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX() + .1, this.getLocationY() + this.getOffsetY());
         status = "moving-right";
     };
-    this.moveLeft = function()
-    {
+    this.moveLeft = function () {
 
         skeletonSpriteSheet.animateLeft();
-        map.setPlayerLocation(this.getLocationX() + this.getoffsetX() - .1 , this.getLocationY() +this.getoffsetY() );
+        map.setPlayerLocation(this.getLocationX() + this.getOffsetX() - .1, this.getLocationY() + this.getOffsetY());
         status = "moving-left";
     };
 
-    this.getLocationX = function()
-    {
+    this.getLocationX = function () {
         return locationX;
     };
-    this.getLocationY = function()
-    {
+    this.getLocationY = function () {
         return locationY;
     };
-    this.getoffsetX = function()
-    {
+    this.getOffsetX = function () {
         return offsetX;
     };
-    this.getoffsetY = function()
-    {
+    this.getOffsetY = function () {
         return offsetY;
     };
 }
