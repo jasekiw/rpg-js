@@ -16,10 +16,8 @@ class App {
         this.kbHandler = new KeyboardHandler(this.player, characterSpriteSheet);
         for(let i = 0; i < 20; i++)
         {
-            let xLocation = Math.floor(Math.random() * this.map.getWidth() - 1);
-            let yLocation = Math.floor(Math.random() * this.map.getHeight() - 1);
-            console.log("xLocation: " + xLocation);
-            console.log("yLocation: " + yLocation);
+            let xLocation = Math.floor(Math.random() * (this.map.getWidth() - 1));
+            let yLocation = Math.floor(Math.random() * (this.map.getHeight() - 1));
             this.monsters.push(new Monster(1, xLocation, yLocation, this.map));
         }
         // this.player.getAutomation().addJob(20,this.player.getLocationY(),1000);
