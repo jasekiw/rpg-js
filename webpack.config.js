@@ -1,5 +1,6 @@
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
+var webpack = require('webpack');
 module.exports = {
     entry: './src/app/App.ts',
     output: {
@@ -32,6 +33,7 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: 'src/index.html' },
             { from: 'src/assets', to: "assets" }
-        ])
+        ]),
+        new webpack.optimize.UglifyJsPlugin()
     ]
 };

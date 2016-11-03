@@ -24,12 +24,19 @@ export class Monster {
     private skeletonSpriteSheet ;
     private attacking = false;
 
-    constructor(levelParam, lx, ly, mapParam) {
-        this.map = mapParam;
-        this.hp = levelParam * 100;
-        this.level = levelParam;
-        this.locationX = lx;
-        this.locationY = ly;
+    /**
+     *
+     * @param level
+     * @param locationX
+     * @param locationY
+     * @param map
+     */
+    constructor(level, locationX, locationY, map) {
+        this.map = map;
+        this.hp = level * 80;
+        this.level = level;
+        this.locationX = locationX;
+        this.locationY = locationY;
         this.offsetX = (this.map.getTileWidth() / 2);
         this.offsetY = (this.map.getTileHeight() / 2);
         this.automation = new MoveAutomation(this, this.map);

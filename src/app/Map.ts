@@ -23,7 +23,12 @@ export class Map {
             for (var y = 0; y < height; y++)
                 addElementBackground(x, y);
     }
-
+    public getWidth() {
+        return this.width;
+    }
+    public getHeight() {
+        return this.height;
+    }
     addPlayer(player) {
         this.player = player;
     }

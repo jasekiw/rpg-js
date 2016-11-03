@@ -14,8 +14,14 @@ class App {
         var characterSpriteSheet = new CharacterSpriteSheet(document.getElementById("character"));
         this.player = new Player(document.getElementById("character"), this.map, characterSpriteSheet);
         this.kbHandler = new KeyboardHandler(this.player, characterSpriteSheet);
-        this.monsters = [];
-        this.monsters.push(new Monster(1, 3, 3, this.map));
+        for(let i = 0; i < 20; i++)
+        {
+            let xLocation = Math.floor(Math.random() * this.map.getWidth() - 1);
+            let yLocation = Math.floor(Math.random() * this.map.getHeight() - 1);
+            console.log("xLocation: " + xLocation);
+            console.log("yLocation: " + yLocation);
+            this.monsters.push(new Monster(1, xLocation, yLocation, this.map));
+        }
         // this.player.getAutomation().addJob(20,this.player.getLocationY(),1000);
         // this.player.getAutomation().addJob(-1,20,1000);
         // this.player.getAutomation().addJob(0,-1,1000);
