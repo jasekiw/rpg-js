@@ -16,10 +16,10 @@ class App {
         this.kbHandler = new KeyboardHandler(this.player, characterSpriteSheet);
         this.monsters = [];
         this.monsters.push(new Monster(1, 3, 3, this.map));
-        //player.getAutomation().addJob(20,player.getLocationY(),1000);
-        //player.getAutomation().addJob(-1,20,1000);
-        //player.getAutomation().addJob(0,-1,1000);
-        //player.getAutomation().addJob(-1,0,1000);
+        // this.player.getAutomation().addJob(20,this.player.getLocationY(),1000);
+        // this.player.getAutomation().addJob(-1,20,1000);
+        // this.player.getAutomation().addJob(0,-1,1000);
+        // this.player.getAutomation().addJob(-1,0,1000);
         this.disableDragging();
         document.getElementById("loading").style.display = "none";
         document.getElementById("game").style.display = "block";
