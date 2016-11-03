@@ -1,9 +1,15 @@
-/**
- * App Class
- * @constructor
- */
-function App() {
-    function constructor() {
+import {CharacterSpriteSheet} from "./CharacterSpriteSheet";
+import {Player} from "./Player";
+import {Monster} from "./Monster";
+import {KeyboardHandler} from "./KeyboardHandler";
+import {Map} from "./Map";
+
+class App {
+    private map : Map;
+    private player : Player;
+    private kbHandler : KeyboardHandler;
+    private monsters : Monster[] = [];
+     constructor() {
         this.map = new Map(25, 25);
         var characterSpriteSheet = new CharacterSpriteSheet(document.getElementById("character"));
         this.player = new Player(document.getElementById("character"), this.map, characterSpriteSheet);
@@ -14,35 +20,26 @@ function App() {
         //player.getAutomation().addJob(-1,20,1000);
         //player.getAutomation().addJob(0,-1,1000);
         //player.getAutomation().addJob(-1,0,1000);
-        disableDragging();
+        this.disableDragging();
         document.getElementById("loading").style.display = "none";
         document.getElementById("game").style.display = "block";
-        update();
+        this.update();
     }
 
-    function disableDragging() {
-        $('img').on('dragstart', function (e) {
-            e.preventDefault();
-        });
-        document.addEventListener("selectstart", function () {
-            return false;
-        });
-        document.addEventListener("mousedown", function () {
-            return false;
-        });
+    disableDragging() {
+        $('img').on('dragstart', e => e.preventDefault());
+        document.addEventListener("selectstart",  () => false);
+        document.addEventListener("mousedown", () => false);
     }
 
-    function update() {
+
+    update() {
         this.kbHandler.handleKeyCodes();
         this.player.update();
         for (var i = 0; i < this.monsters.length; i++)
             if (this.monsters[i].update())
                 this.monsters.splice(i, 1);
-        setTimeout(function () {
-            update();
-        }, 30);
+        setTimeout(() => this.update(), 30);
     }
-
-    constructor();
 }
 new App();

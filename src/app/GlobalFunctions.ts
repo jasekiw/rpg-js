@@ -1,13 +1,14 @@
-function getTime() {
+import {Resources} from "./Resources";
+export function getTime() {
     var d = new Date();
     return d.getTime();
 }
 
-function replaceAll(find, replace, str) {
+export function replaceAll(find, replace, str) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function addElementBackground(x, y) {
+export function addElementBackground(x, y) {
     var ni = document.getElementById('gameBackground');
     var newDiv = document.createElement('img');
     var divIdName = 'img' + x + ";" + y;
@@ -21,12 +22,12 @@ function addElementBackground(x, y) {
     ni.appendChild(newDiv);
 }
 
-function getValueFromCss(pixels) {
+export function getValueFromCss(pixels) {
     return Number(pixels.substring(0, pixels.indexOf('px')));
 }
-function getLeftOfElement(elem) {
+export function getLeftOfElement(elem) {
     return getValueFromCss(elem.style.left);
 }
-function getTopOfElement(elem) {
+export function getTopOfElement(elem) {
     return getValueFromCss(elem.style.top);
 }

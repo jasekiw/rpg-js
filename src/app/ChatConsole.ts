@@ -1,10 +1,10 @@
-var ChatConsole = {
+export class ChatConsole {
 
-    LogThis: function (text) {
+    public static LogThis(text) {
         document.getElementById("log").innerHTML += "<br/>" + text;
         document.getElementById("toplog").scrollTop = document.getElementById("toplog").scrollHeight;
-    },
-    LogThisAlone: function (text) {
+    }
+    public static LogThisAlone(text) {
         document.getElementById("log").innerHTML = "<br/>" + text;
     }
-};
+}
