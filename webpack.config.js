@@ -2,10 +2,13 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
 module.exports = {
-    entry: './src/app/App.ts',
+    entry: {
+        app: './src/app/App.ts',
+        style: './src/assets/css/style.scss'
+    },
     output: {
         path: './dist',
-        filename: 'app.bundle.js',
+        filename: '[name]].bundle.js',
         publicPath: "/"
     },
     devtool: 'source-map',
@@ -30,15 +33,17 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loaders: ["style", "css", "sass"]
+                loaders: ["css?sourceMap", "sass?sourceMap"]
             }
         ]
     },
     plugins: [
-        // new CopyWebpackPlugin([
-        //     { from: 'src/index.html' },
-        //     { from: 'src/assets', to: "assets" }
-        // ]),
+        new CopyWebpackPlugin([
+            { from: 'src/index.html' },
+            // { from: 'src/assets/css', to: "assets/css" },
+            { from: 'src/assets/img', to: "assets/img" },
+            { from: 'src/assets/js', to: "assets/js" }
+        ]),
         new webpack.optimize.UglifyJsPlugin()
     ]
 };
