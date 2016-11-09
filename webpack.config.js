@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         app: './src/app/App.ts',
-        style: './src/assets/css/style.scss'
+        style: './src/assets/sass/style.scss'
     },
     output: {
         path: './dist',
