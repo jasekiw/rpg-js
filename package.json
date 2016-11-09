@@ -12,8 +12,6 @@
   "author": "Jason Gallavin",
   "license": "ISC",
   "dependencies": {
-    "base-href-webpack-plugin": "^1.0.0",
-    "extract-text-webpack-plugin": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
