@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm run-script serve",
-    "build": " webpack",
+    "build": "webpack",
     "serve": "npm run-script build && webpack-dev-server --content-base dist/ --open",
     "postinstall": "npm run-script typings",
     "typings": "cd src && typings install"
