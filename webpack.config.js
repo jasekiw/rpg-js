@@ -9,7 +9,7 @@ module.exports = {
         publicPath: "/"
     },
     devtool: 'source-map',
-    devServer: {inline: true},
+    devServer: {inline: true, outputPath: "./dist"},
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
@@ -19,21 +19,26 @@ module.exports = {
                 test: /\.ts(x?)$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader?presets[]=es2015!ts-loader'
-            }, {
+            },
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel',
                 query: {
                     presets: ['es2015']
                 }
+            },
+            {
+                test: /\.scss$/,
+                loaders: ["style", "css", "sass"]
             }
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            { from: 'src/index.html' },
-            { from: 'src/assets', to: "assets" }
-        ]),
+        // new CopyWebpackPlugin([
+        //     { from: 'src/index.html' },
+        //     { from: 'src/assets', to: "assets" }
+        // ]),
         new webpack.optimize.UglifyJsPlugin()
     ]
 };

@@ -1,4 +1,6 @@
 import {replaceAll, getTime} from "./GlobalFunctions";
+import {Player} from "./Player";
+import {CharacterSpriteSheet} from "./CharacterSpriteSheet";
 /**
  * KeyboardHandler Class
  * @param playerParam
@@ -12,12 +14,12 @@ export class KeyboardHandler {
     private lastTime = getTime();
     private time = getTime();
     private yawn = false;
-    private player;
-    private characterSpriteSheet;
+    private player : Player;
+    private characterSpriteSheet : CharacterSpriteSheet;
 
-    constructor(playerParam, characterSpriteSheetParam) {
-        this.player = playerParam;
-        this.characterSpriteSheet = characterSpriteSheetParam;
+    constructor(player : Player, characterSpriteSheet : CharacterSpriteSheet) {
+        this.player = player;
+        this.characterSpriteSheet = characterSpriteSheet;
         document.addEventListener("keydown",  (e) => {
             this.keyCode += e.keyCode + ";";
             this.yawn = false;

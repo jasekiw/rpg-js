@@ -1,4 +1,4 @@
-import {addElementBackground} from "./GlobalFunctions";
+import {Resources} from "./Resources";
 /**
  * The Map Class
  * @param width
@@ -14,6 +14,7 @@ export class Map {
     private player;
     private width: number;
     private height: number;
+    private backgroundArr = [];
     constructor(width, height) {
         this.initialLocationX = Math.round(((window.innerWidth / 2)));
         this.initialLocationY = Math.round(((window.innerHeight / 2)));
@@ -21,7 +22,14 @@ export class Map {
         this.height = height;
         for (var x = 0; x < width; x++)
             for (var y = 0; y < height; y++)
-                addElementBackground(x, y);
+            {
+                let elem = this.addBackgroundElement(x, y);
+                if(this.backgroundArr[x] == null)
+                    this.backgroundArr[x] = [];
+                this.backgroundArr[x][y] = elem;
+            }
+
+
     }
     public getWidth() {
         return this.width;
@@ -31,6 +39,22 @@ export class Map {
     }
     addPlayer(player) {
         this.player = player;
+    }
+
+    protected addBackgroundElement(x, y) {
+        var ni = document.getElementById('gameBackground');
+        var newDiv = document.createElement('img');
+        var divIdName = 'img' + x + ";" + y;
+        newDiv.setAttribute('id', divIdName);
+        newDiv.setAttribute('src', Resources.grass);
+        newDiv.setAttribute('width', '100px');
+        newDiv.setAttribute('height', '100px');
+        newDiv.className = 'tile';
+        newDiv.style.position = 'absolute';
+        newDiv.style.left = (x * 100) + 'px';
+        newDiv.style.top = (y * 100) + 'px';
+        ni.appendChild(newDiv);
+        return newDiv;
     }
 
     getPlayer() {
@@ -68,7 +92,7 @@ export class Map {
 
         for (var x = 0; x < this.width; x++) {
             for (var y = 0; y < this.height; y++) {
-                var elem = document.getElementById('img' + x + ';' + y);
+                var elem = this.backgroundArr[x][y];
                 elem.style.left = (x * 100) + (moveX * -100) + left + "px";
                 elem.style.top = (y * 100) + (moveY * -100) + top + "px";
             }
@@ -82,7 +106,7 @@ export class Map {
 
         for (var x = 0; x < this.width; x++) {
             for (var y = 0; y < this.height; y++) {
-                var elem = document.getElementById('img' + x + ';' + y);
+                var elem = this.backgroundArr[x][y];
                 elem.style.left = (x * 100) + (moveX * -100) + left - (this.tileWidth / 2) + "px";
                 elem.style.top = (y * 100) + (moveY * -100) + top - (this.tileHeight / 2) + "px";
             }

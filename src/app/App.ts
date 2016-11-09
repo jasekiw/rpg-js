@@ -10,11 +10,11 @@ class App {
     private kbHandler : KeyboardHandler;
     private monsters : Monster[] = [];
      constructor() {
-        this.map = new Map(25, 25);
+        this.map = new Map(15, 15);
         var characterSpriteSheet = new CharacterSpriteSheet(document.getElementById("character"));
         this.player = new Player(document.getElementById("character"), this.map, characterSpriteSheet);
         this.kbHandler = new KeyboardHandler(this.player, characterSpriteSheet);
-        for(let i = 0; i < 20; i++)
+        for(let i = 0; i < this.map.getWidth() / 2; i++)
         {
             let xLocation = Math.floor(Math.random() * (this.map.getWidth() - 1));
             let yLocation = Math.floor(Math.random() * (this.map.getHeight() - 1));
