@@ -1,6 +1,7 @@
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         app: './src/app/App.ts',
@@ -8,8 +9,8 @@ module.exports = {
     },
     output: {
         path: './dist',
-        filename: '[name]].bundle.js',
-        publicPath: "/"
+        filename: '[name].bundle.js'
+
     },
     devtool: 'source-map',
     devServer: {inline: true, outputPath: "./dist"},
@@ -33,17 +34,19 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loaders: ["css?sourceMap", "sass?sourceMap"]
+                loaders: ["style", "css?sourceMap", "sass?sourceMap"]
             }
+
         ]
     },
     plugins: [
         new CopyWebpackPlugin([
-            { from: 'src/index.html' },
-            // { from: 'src/assets/css', to: "assets/css" },
-            { from: 'src/assets/img', to: "assets/img" },
-            { from: 'src/assets/js', to: "assets/js" }
+            { from: 'src/assets', to: "assets" }
         ]),
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin(),
+        new HtmlWebpackPlugin({
+            template: 'src/index.html',
+            filename: "index.html"
+        })
     ]
 };

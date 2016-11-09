@@ -4,12 +4,17 @@
   "description": "",
   "scripts": {
     "start": "npm run-script serve",
-    "build": "cd src && typings install && cd ../ && webpack",
-    "serve": "npm run-script build && webpack-dev-server --content-base dist/ --open"
+    "build": " webpack",
+    "serve": "npm run-script build && webpack-dev-server --content-base dist/ --open",
+    "postinstall": "npm run-script typings",
+    "typings": "cd src && typings install"
   },
   "author": "Jason Gallavin",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "base-href-webpack-plugin": "^1.0.0",
+    "extract-text-webpack-plugin": "^1.0.1"
+  },
   "devDependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
@@ -17,8 +22,11 @@
     "copy-webpack-plugin": "^4.0.0",
     "css-loader": "^0.25.0",
     "extract-loader": "0.0.2",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.24.1",
     "node-sass": "^3.11.1",
     "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
     "ts-loader": "^1.0.0",
     "typescript": "^2.0.6",
     "typings": "^2.0.0",
