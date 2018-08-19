@@ -1,4 +1,4 @@
-import {getTime, getLeftOfElement, getTopOfElement} from "./GlobalFunctions";
+import {getTime, getLeftOfElement, getTopOfElement} from "./Util";
 import {SkeletonSpriteSheet} from "./SkeletonSpriteSheet";
 import {Resources} from "./Resources";
 import {MoveAutomation} from "./MoveAutomation";

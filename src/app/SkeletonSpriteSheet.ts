@@ -1,4 +1,4 @@
-import {getTime} from "./GlobalFunctions";
+import {getTime} from "./Util";
 import {Resources} from "./Resources";
 /**
  * SkeletonSpriteSheet Class

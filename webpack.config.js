@@ -1,24 +1,34 @@
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     entry: {
-        app: './src/app/App.ts',
-        style: './src/assets/sass/style.scss'
+        app: path.resolve(__dirname , 'src', 'app', 'App.ts'),
+        style: path.resolve(__dirname , 'src', 'assets', 'sass', 'style.scss')
     },
     output: {
-        path: './dist',
+        path: path.resolve(__dirname , 'dist'),
         filename: '[name].bundle.js'
 
     },
+    // optimization: {
+    //     minimize: true
+    // },
     devtool: 'source-map',
-    devServer: {inline: true, outputPath: "./dist"},
+    mode: "development",
+    devServer: {
+        inline: true,
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9000
+    },
     resolve: {
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.ts(x?)$/,
                 exclude: /node_modules/,
@@ -27,14 +37,14 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 query: {
                     presets: ['es2015']
                 }
             },
             {
                 test: /\.scss$/,
-                loaders: ["style", "css?sourceMap", "sass?sourceMap"]
+                loaders: ["style-loader", "css-loader?sourceMap", "sass-loader?sourceMap"]
             }
 
         ]
@@ -43,7 +53,6 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: 'src/assets', to: "assets" }
         ]),
-        new webpack.optimize.UglifyJsPlugin(),
         new HtmlWebpackPlugin({
             template: 'src/index.html',
             filename: "index.html"

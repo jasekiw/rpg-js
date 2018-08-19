@@ -1,4 +1,4 @@
-import {getTime} from "./GlobalFunctions";
+import {getTime} from "./Util";
 import {AutomationJob} from "./AutomationJob";
 
 export class MoveAutomation {

@@ -1,4 +1,4 @@
-import {replaceAll, getTime} from "./GlobalFunctions";
+import {replaceAll, getTime} from "./Util";
 import {Player} from "./Player";
 import {CharacterSpriteSheet} from "./CharacterSpriteSheet";
 /**
